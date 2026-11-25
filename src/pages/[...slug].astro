@@ -1,0 +1,67 @@
+---
+import SiteLayout from '../layouts/SiteLayout.astro';
+import { renderTemplate } from '../lib/template';
+import { authors, categories, dateLabel, pageSize, pages, posts, site, type Entry } from '../lib/site';
+
+type Route = {
+  title: string;
+  entry?: Entry;
+  items?: Entry[];
+  blogPage?: number;
+};
+
+export function getStaticPaths() {
+  const routes = new Map<string, Route>();
+  const route = (path: string, props: Route) => routes.set(path.replace(/^\/|\/$/g, ''), props);
+
+  for (const entry of [...pages, ...posts]) {
+    if (entry.path !== '/') route(entry.path, { title: entry.title, entry });
+  }
+
+  const blogPages = Math.ceil(posts.length / pageSize);
+  for (let i = 1; i <= blogPages; i++) {
+    route(i === 1 ? '/blog/' : `/blog/page/${i}/`, {
+      title: i === 1 ? 'Auto Repair Blog' : `Auto Repair Blog · Page ${i}`,
+      items: posts.slice((i - 1) * pageSize, i * pageSize), blogPage: i,
+    });
+  }
+
+  for (const category of categories) {
+    const items = posts.filter(post => post.categories.includes(category.id));
+    if (items.length) route(category.path, { title: category.name, items });
+  }
+  for (const author of authors) {
+    const items = posts.filter(post => post.author === author.id);
+    if (items.length) route(author.path, { title: `Articles by ${author.name}`, items });
+  }
+
+  const dateArchives = new Map<string, Entry[]>();
+  for (const post of posts) {
+    const dateParts = post.date.split('-');
+    for (const level of [1, 2, 3]) {
+      const path = `/${dateParts.slice(0, level).join('/')}/`;
+      const items = dateArchives.get(path) ?? [];
+      items.push(post);
+      dateArchives.set(path, items);
+    }
+  }
+  for (const [path, items] of dateArchives) {
+    const date = items[0].date;
+    const depth = path.split('/').length - 2;
+    const archiveDate = depth === 1 ? date.slice(0, 4) : depth === 2
+      ? new Intl.DateTimeFormat('en-US', { month: 'long', year: 'numeric', timeZone: 'UTC' }).format(new Date(`${date}T12:00:00Z`))
+      : dateLabel(date);
+    route(path, { title: `Articles from ${archiveDate}`, items });
+  }
+
+  return [...routes].map(([slug, props]) => ({ params: { slug }, props }));
+}
+
+const { title, entry, items, blogPage } = Astro.props as Route;
+const path = Astro.url.pathname;
+const type = items ? 'blog' : entry?.kind === 'post' ? 'article' : path === '/about-us/' ? 'about' : path === '/our-services/' ? 'serviceIndex' : path === '/our-work/' ? 'gallery' : path === '/contact-us/' ? 'contact' : 'service';
+const html = renderTemplate({type,title,entry,items,blogPage,totalBlogPages:Math.ceil(posts.length / pageSize)});
+---
+<SiteLayout title={title} description={entry?.excerpt.replaceAll('Gabriel;s', 'Gabriel’s').slice(0,165)} memberships={type === 'about'}>
+  <Fragment set:html={html} />
+</SiteLayout>

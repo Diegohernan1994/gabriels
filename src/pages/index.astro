@@ -1,0 +1,8 @@
+---
+import SiteLayout from '../layouts/SiteLayout.astro';
+import { renderTemplate } from '../lib/template';
+const html = renderTemplate({type:'home',title:'Home'});
+---
+<SiteLayout title="Auto Service in Pasadena" memberships>
+  <Fragment set:html={html} />
+</SiteLayout>

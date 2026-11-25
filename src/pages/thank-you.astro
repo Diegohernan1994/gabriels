@@ -1,0 +1,29 @@
+---
+import SiteLayout from '../layouts/SiteLayout.astro';
+import { site } from '../lib/site';
+---
+<SiteLayout title="Thank You" description="Thank you for contacting Gabriel's Auto Service in Pasadena.">
+  <main class="thank-you-page">
+    <div class="container">
+      <div class="thank-you-card">
+        <a href="/" aria-label={site.name} class="thank-you-logo">
+          <img src="/brand/logo-header.svg" alt={site.name} width="160" height="84" />
+        </a>
+        <p class="thank-you-kicker">REQUEST RECEIVED</p>
+        <h1>Thank You!</h1>
+        <p class="thank-you-copy">
+          We received your information. A member of the <strong>{site.name}</strong> team will reach out shortly to help you with your vehicle or membership.
+        </p>
+        <div class="thank-you-meta">
+          <p><strong>Need immediate help?</strong> Call <a href={site.tel}>{site.phone}</a></p>
+          <p><a href={site.directions} target="_blank" rel="noopener">{site.address}</a></p>
+          <p>Mon–Fri: 8 AM–5 PM · Sat: 8 AM–1 PM</p>
+        </div>
+        <div class="thank-you-actions">
+          <a href="/" class="common-btn">BACK TO HOME</a>
+          <a href="/memberships/" class="more-btn">VIEW MEMBERSHIPS</a>
+        </div>
+      </div>
+    </div>
+  </main>
+</SiteLayout>

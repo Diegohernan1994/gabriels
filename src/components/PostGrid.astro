@@ -1,0 +1,17 @@
+---
+import { dateLabel, type Entry } from '../lib/site';
+const { items } = Astro.props as { items: Entry[] };
+---
+<div class="post-grid">
+  {items.map(post => (
+    <article class="post-card">
+      {post.image && <a href={post.path} tabindex="-1" aria-hidden="true"><img src={post.image.src} alt="" width="480" height="270" loading="lazy" /></a>}
+      <div>
+        <time class="kicker" datetime={post.date}>{dateLabel(post.date)}</time>
+        <h2><a href={post.path}>{post.title}</a></h2>
+        <p>{post.excerpt.length > 190 ? `${post.excerpt.slice(0, 187).replace(/\s+\S*$/, '')}…` : post.excerpt}</p>
+        <a class="text-link" href={post.path} aria-label={`Read ${post.title}`}>Read article <span aria-hidden="true">↗</span></a>
+      </div>
+    </article>
+  ))}
+</div>

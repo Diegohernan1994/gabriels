@@ -1,0 +1,8 @@
+node_modules/
+dist/
+.astro/
+.npm-cache/
+.migration-cache/
+.template-cache/
+public/api/leads_backup.log
+preview-*.png

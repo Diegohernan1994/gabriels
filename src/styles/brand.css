@@ -1,0 +1,140 @@
+/* Preserve CRAS layout and animation styles; apply Gabriel's typography and content. */
+html body { --body-font-family: 'Inter'; --heading-font-family: 'Inter'; }
+html body .container,
+html body .container-sm,
+html body .container-md,
+html body .container-lg,
+html body .container-xl,
+html body .container-xxl,
+html body .ak-site_header_full_width .container {
+  width: 100% !important;
+  max-width: 75vw !important;
+  padding-inline: clamp(16px, 2vw, 32px) !important;
+}
+@media (max-width: 991px) {
+  html body .container,
+  html body .container-sm,
+  html body .container-md,
+  html body .container-lg,
+  html body .container-xl,
+  html body .container-xxl,
+  html body .ak-site_header_full_width .container {
+    max-width: 94vw !important;
+  }
+}
+html body .container-customize {
+  width: 100% !important;
+  max-width: min(1480px, 75vw) !important;
+}
+html body .pricing {
+  width: 100%;
+}
+html body .pricing .pricing-card {
+  flex: 1 1 0;
+}
+html body .company-tab .tabs-content,
+html body .cta .cta-info,
+html body .cta .cta-info .cta-desp,
+html body .ceo-content .right-info,
+html body .ak-section-heading .ak-section-subtitle,
+html body .footer.style-1 .footer-email .footer-heading-email .email-title {
+  max-width: 100% !important;
+}
+@media (min-width: 992px) {
+  html body .choose-us-contain .choose-us-info,
+  html body .choose-us-contain .choose-us-img {
+    max-width: 48% !important;
+    flex: 1 1 48%;
+  }
+}
+html body, html body button, html body input, html body textarea { font-family: 'Inter', sans-serif; }
+html body :is(h1,h2,h3,h4,h5,h6) { font-family: 'Inter', sans-serif; }
+html body .ak-nav_list > li > a { font-family: 'Inter', sans-serif; font-weight: 600; }
+html body .ak-nav_list ul a { font-family: 'Montserrat', sans-serif; }
+html body .hero-title > h1 { font-weight: 900; font-style: oblique; }
+html body .ak-site_branding img { width: 142px; height: 75px; object-fit: contain; }
+html body .footer-logo img { width: 220px; height: 117px; object-fit: contain; }
+html body .footer.style-1 .footer-content .footer-info .phone { font-size: clamp(22px, 2.5vw, 32px); line-height: 1.2; white-space: nowrap; }
+[hidden] { display: none !important; }
+html body .pricing-card { display: flex; flex-direction: column; }
+html body .pricing-card .opation-all { flex: 1; }
+html body .pricing-card .get-started-btn { white-space: nowrap; width: fit-content; margin-top: auto; }
+html body .pricing-card .pricing-heading .main-price { text-decoration-line: none; font-size: 16px; }
+html body .testimonal-info .desp { font-size: clamp(18px, 1.9vw, 27px); }
+html body .blog-card .blog-title { display: block; font-size: 21px; line-height: 1.4; }
+html body .blog-header-info img { width: 100%; aspect-ratio: 4/3; object-fit: cover; }
+html body .blog-feature .feature-img img { width: 100%; object-fit: cover; }
+html body .gabriel-pagination { display: flex; gap: 25px; padding-top: 40px; }
+html body .gabriel-pagination [aria-current] { color: var(--primary-color); }
+html body .wp-content { overflow-wrap: anywhere; }
+html body .wp-content :is(h2,h3,h4) { font-size: 26px; margin: 40px 0 18px; line-height: 1.35; }
+html body .wp-content :is(p,ul,ol,blockquote) { margin-bottom: 25px; line-height: 1.75; }
+html body .wp-content a { text-decoration: underline; text-underline-offset: 4px; }
+html body .wp-content img { max-width: 100%; height: auto; margin-block: 22px; }
+html body .wp-content figure { margin: 0; }
+html body .wp-content table { display: block; overflow: auto; max-width: 100%; }
+html body .wp-content td, html body .wp-content th { padding: 10px; border: 1px solid #666; }
+html body .service-area-links { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 22px 30px; }
+html body .service-area-links .more-btn { width: fit-content; }
+html body .time-title .title { font-size: clamp(28px, 4vw, 48px); }
+html body .gallery .item img { width: 100%; height: 100%; object-fit: cover; }
+html body .gallery .gallery-hover-icon img { width: auto; height: auto; }
+.enrollment-dialog { background: var(--body-bg-color); color: var(--body-color); border: 1px solid var(--primary-color); padding: 36px; width: min(560px, calc(100% - 28px)); max-height: calc(100% - 28px); overflow-y: auto; }
+.enrollment-dialog::backdrop { background: #000c; }
+.enrollment-kicker { color: var(--primary-color); font-size: 12px; font-weight: 700; letter-spacing: 0.12em; margin-bottom: 6px; }
+.enrollment-dialog h3 { margin-bottom: 18px; }
+.enrollment-close { position: absolute; top: 6px; right: 10px; }
+.enrollment-close button { color: inherit; background: transparent; border: 0; font-size: 28px; padding: 4px 12px; cursor: pointer; }
+.enrollment-order { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; border-block: 1px solid #444; padding-block: 12px; margin-bottom: 14px; font-size: 17px; }
+.enrollment-subcopy { font-size: 14px; line-height: 1.5; opacity: 0.85; margin-bottom: 18px; }
+.enrollment-form { display: flex; flex-direction: column; gap: 14px; }
+.enrollment-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.enrollment-field { display: flex; flex-direction: column; gap: 6px; font-size: 13px; font-weight: 600; }
+.enrollment-field input { background: rgba(255,255,255,0.05); color: #fff; border: 1px solid #444; padding: 11px 13px; font-size: 14px; width: 100%; outline: none; }
+.enrollment-field input:focus { border-color: var(--primary-color); }
+.crm-consent-row { margin-top: 18px; }
+.crm-checkbox-label { display: flex; align-items: flex-start; gap: 10px; font-size: 12.5px; line-height: 1.45; opacity: 0.88; cursor: pointer; }
+.crm-checkbox-label input[type="checkbox"] { width: 16px; height: 16px; margin-top: 2px; flex-shrink: 0; accent-color: var(--primary-color); }
+.enrollment-dialog .common-btn { font-size: 15px; padding: 14px 22px; margin-top: 6px; width: 100%; text-align: center; }
+.thank-you-page { min-height: 100vh; display: flex; align-items: center; padding: 60px 16px; }
+.thank-you-card { max-width: min(920px, 75vw); margin: 0 auto; border: 1px solid var(--primary-color); padding: 48px 36px; text-align: center; background: rgba(255,255,255,0.02); }
+.thank-you-logo { display: inline-block; margin-bottom: 24px; }
+.thank-you-kicker { color: var(--primary-color); font-size: 13px; font-weight: 700; letter-spacing: 0.14em; margin-bottom: 10px; }
+.thank-you-card h1 { font-size: clamp(32px, 5vw, 48px); margin-bottom: 16px; }
+.thank-you-copy { font-size: 16px; line-height: 1.65; opacity: 0.9; margin-bottom: 26px; }
+.thank-you-meta { border-block: 1px solid #333; padding: 18px 0; margin-bottom: 28px; display: flex; flex-direction: column; gap: 6px; font-size: 15px; }
+.thank-you-meta a { color: var(--primary-color); text-decoration: underline; text-underline-offset: 3px; }
+.thank-you-actions { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 20px; }
+.thank-you-actions .more-btn { width: auto; }
+.thank-you-actions .more-btn::after { width: 100%; }
+@media (max-width:575px) {
+  .enrollment-dialog { padding: 24px 20px; }
+  .enrollment-grid { grid-template-columns: 1fr; }
+  .thank-you-card { padding: 32px 20px; }
+}
+@media (min-width:1200px) and (max-width:1500px) {
+  html body .ak-nav .ak-nav_list > li { margin-right: 20px; }
+  html body .ak-nav .ak-nav_list > li:last-child { margin-right: 0; }
+  html body .ak-main-header-right h6 { font-size: 17px; }
+}
+@media (max-width:767px) {
+  html body .ak-site_branding img { width: 115px; height: 61px; }
+  html body .wp-content :is(h2,h3,h4) { font-size: 23px; }
+  html body .footer-logo img { max-width: 190px; }
+  html body .pricing { gap: 18px; }
+  html body .pricing .pricing-card { min-width: 0; padding: 20px 16px; }
+  html body .pricing .pricing-card[data-aos] { opacity: 1 !important; transform: none !important; }
+  html body .pricing-card .pricing-heading { gap: 4px; margin-bottom: 16px; }
+  html body .pricing-card .pricing-heading .title { font-size: 16px; }
+  html body .pricing-card .pricing-heading .discount-price { font-size: 32px; line-height: 1.1; }
+  html body .pricing-card .pricing-heading .main-price { font-size: 13px; }
+  html body .pricing-card .opation-all { margin-bottom: 16px; }
+  html body .pricing-card .opation-all .opation { margin-bottom: 5px; }
+  html body .pricing-card .opation-all .opation .title { font-size: 14px; }
+  html body .pricing-card .opation-all .opation .icon svg { width: 20px; height: 20px; }
+  html body .pricing-card .get-started-btn { padding: 10px 22px; }
+}
+@media (prefers-reduced-motion:reduce) {
+  html body *, html body *::before, html body *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+  html body [data-aos] { opacity: 1 !important; transform: none !important; }
+}

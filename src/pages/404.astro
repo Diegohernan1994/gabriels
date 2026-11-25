@@ -1,0 +1,8 @@
+---
+import SiteLayout from '../layouts/SiteLayout.astro';
+import { renderTemplate } from '../lib/template';
+const html = renderTemplate({ type: 'service', title: 'Page not found' });
+---
+<SiteLayout title="Page not found">
+  <Fragment set:html={html} />
+</SiteLayout>

@@ -1,0 +1,8 @@
+---
+import SiteLayout from '../layouts/SiteLayout.astro';
+import { renderTemplate } from '../lib/template';
+const html = renderTemplate({type:'pricing',title:'Memberships'});
+---
+<SiteLayout title="Memberships" memberships>
+  <Fragment set:html={html} />
+</SiteLayout>

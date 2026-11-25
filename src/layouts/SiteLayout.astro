@@ -1,0 +1,89 @@
+---
+import { site } from '../lib/site';
+import Enrollment from '../components/Enrollment.astro';
+import '../styles/brand.css';
+interface Props { title: string; description?: string; memberships?: boolean }
+const { title, description = 'Family owned auto service in Pasadena. Collision repair, mechanical repairs, smog checks, tires and alignment.', memberships = false } = Astro.props;
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>{title} | {site.name}</title>
+    <link rel="icon" type="image/svg+xml" href="/brand/logo-header.svg" />
+    <link rel="stylesheet" href="/cras/css/plugins/lightgallery.min.css" />
+    <link rel="stylesheet" href="/cras/css/plugins/swiper.min.css" />
+    <link rel="stylesheet" href="/cras/css/plugins/aos.css" />
+    <link rel="stylesheet" href="/cras/css/plugins/bootstrap.min.css" />
+    <link rel="stylesheet" href="/cras/sass/style.css" />
+    <link rel="stylesheet" href="/fonts/wordpress.css" />
+  </head>
+  <body>
+    <slot />
+    {memberships && <Enrollment />}
+    <script is:inline src="/cras/js/plugins/jquery-3.7.1.min.js"></script>
+    <script is:inline src="/cras/js/plugins/lightgallery.min.js"></script>
+    <script is:inline src="/cras/js/plugins/simplePagination.min.js"></script>
+    <script is:inline src="/cras/js/plugins/aos.js"></script>
+    <script is:inline src="/cras/js/plugins/swiper.min.js"></script>
+    <script is:inline src="/cras/js/plugins/SplitText.min.js"></script>
+    <script is:inline src="/cras/js/main.js"></script>
+    <script>
+      import { submitLeadToCRM, THANK_YOU_URL } from '../lib/crm';
+
+      window.addEventListener('load', () => {
+        const menu = document.querySelector<HTMLElement>('.ak-munu_toggle');
+        if (menu) {
+          menu.setAttribute('role','button');
+          menu.setAttribute('tabindex','0');
+          menu.setAttribute('aria-label','Toggle navigation');
+          menu.setAttribute('aria-expanded','false');
+          menu.addEventListener('click', () => menu.setAttribute('aria-expanded',String(menu.classList.contains('ak-toggle_active'))));
+          menu.addEventListener('keydown', event => {
+            if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); menu.click(); }
+          });
+        }
+        document.querySelectorAll<HTMLElement>('.ak-munu_dropdown_toggle').forEach(toggle => {
+          toggle.setAttribute('role','button');
+          toggle.setAttribute('tabindex','0');
+          toggle.setAttribute('aria-label','Show service pages');
+          toggle.addEventListener('keydown', event => {
+            if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); toggle.click(); }
+          });
+        });
+      });
+
+      const inquiry = document.querySelector<HTMLFormElement>('#inquiry-form');
+      if (inquiry) {
+        let sending = false;
+        inquiry.addEventListener('submit', async event => {
+          event.preventDefault();
+          if (sending) return;
+          sending = true;
+
+          const btn = inquiry.querySelector<HTMLButtonElement>('button[type="submit"]');
+          if (btn) {
+            btn.disabled = true;
+            btn.textContent = 'SENDING...';
+          }
+
+          const values = new FormData(inquiry);
+          await submitLeadToCRM({
+            name: String(values.get('name') || ''),
+            email: String(values.get('email') || ''),
+            phone: String(values.get('phone') || ''),
+            interest: String(values.get('interest') || 'General Auto Service Inquiry'),
+            message: String(values.get('msg') || ''),
+            sms_opt_in: values.get('sms_opt_in') === 'Yes',
+            form_source: 'contact_inquiry',
+          });
+
+          window.location.href = THANK_YOU_URL;
+        });
+      }
+    </script>
+  </body>
+</html>

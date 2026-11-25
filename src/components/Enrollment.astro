@@ -1,0 +1,145 @@
+<dialog id="enrollment" class="enrollment-dialog" aria-labelledby="enrollment-title">
+  <form method="dialog" class="enrollment-close">
+    <button aria-label="Close enrollment">×</button>
+  </form>
+  <p class="enrollment-kicker">MEMBERSHIP ENROLLMENT</p>
+  <h3 id="enrollment-title">Join Gabriel’s Car Care Club</h3>
+
+  <div id="enrollment-review">
+    <p class="enrollment-order">
+      <strong id="enrollment-plan"></strong>
+      <span id="enrollment-price"></span>
+    </p>
+    <p class="enrollment-subcopy">
+      Enter your contact and vehicle details below. Next, you’ll be directed to secure Stripe checkout to activate your membership.
+    </p>
+
+    <form id="enrollment-form" class="enrollment-form">
+      <div class="enrollment-grid">
+        <label class="enrollment-field">
+          <span>Full Name*</span>
+          <input type="text" name="name" autocomplete="name" required placeholder="John Doe" />
+        </label>
+        <label class="enrollment-field">
+          <span>Phone Number*</span>
+          <input type="tel" name="phone" autocomplete="tel" required placeholder="(626) 555-0199" />
+        </label>
+      </div>
+
+      <div class="enrollment-grid">
+        <label class="enrollment-field">
+          <span>Email Address*</span>
+          <input type="email" name="email" autocomplete="email" required placeholder="you@example.com" />
+        </label>
+        <label class="enrollment-field">
+          <span>ZIP Code</span>
+          <input type="text" name="zip" autocomplete="postal-code" inputmode="numeric" maxlength="10" placeholder="91106" />
+        </label>
+      </div>
+
+      <label class="enrollment-field">
+        <span>Vehicle (Year / Make / Model)*</span>
+        <input type="text" name="vehicle" required placeholder="e.g. 2021 Toyota Camry" />
+      </label>
+
+      <label class="crm-checkbox-label">
+        <input type="checkbox" name="sms_opt_in" value="Yes" checked />
+        <span>I agree to receive SMS appointment reminders and membership updates from Gabriel’s Auto Service. Reply STOP to opt out.</span>
+      </label>
+
+      <button type="submit" class="common-btn enrollment-submit" id="enrollment-confirm">
+        CONTINUE TO PAYMENT
+      </button>
+    </form>
+  </div>
+
+  <div id="enrollment-done" hidden>
+    <p id="enrollment-result" role="status"></p>
+    <form method="dialog"><button class="common-btn">BACK TO PLANS</button></form>
+  </div>
+</dialog>
+
+<script>
+  import { submitLeadToCRM, buildCheckoutRedirectUrl } from '../lib/crm';
+
+  const dialog = document.querySelector<HTMLDialogElement>('#enrollment');
+  const heading = document.querySelector('#enrollment-title');
+  const planNameEl = document.querySelector('#enrollment-plan');
+  const planPriceEl = document.querySelector('#enrollment-price');
+  const review = document.querySelector<HTMLElement>('#enrollment-review');
+  const done = document.querySelector<HTMLElement>('#enrollment-done');
+  const result = document.querySelector('#enrollment-result');
+  const form = document.querySelector<HTMLFormElement>('#enrollment-form');
+  const submitBtn = document.querySelector<HTMLButtonElement>('#enrollment-confirm');
+
+  if (dialog && heading && planNameEl && planPriceEl && review && done && result && form && submitBtn) {
+    let selectedPlan = '';
+    let selectedPrice = '';
+    let selectedInterval = 'month';
+    let checkoutUrl = '';
+    let submitting = false;
+
+    document.addEventListener('click', event => {
+      const link = (event.target as Element).closest<HTMLElement>('[data-plan]');
+      if (!link) return;
+      event.preventDefault();
+
+      selectedPlan = link.dataset.plan ?? '';
+      selectedPrice = link.dataset.price ?? '';
+      selectedInterval = link.dataset.interval ?? 'month';
+      checkoutUrl = (link.dataset.checkoutUrl ?? '').trim();
+
+      planNameEl.textContent = `${selectedPlan} Plan`;
+      planPriceEl.textContent = `$${selectedPrice} / ${selectedInterval}`;
+      heading.textContent = 'Join Gabriel’s Car Care Club';
+      result.textContent = '';
+      form.reset();
+      review.hidden = false;
+      done.hidden = true;
+      submitBtn.disabled = false;
+      submitBtn.textContent = checkoutUrl ? 'CONTINUE TO PAYMENT' : 'COMPLETE REGISTRATION';
+      dialog.showModal();
+    });
+
+    form.addEventListener('submit', async event => {
+      event.preventDefault();
+      if (submitting) return;
+      submitting = true;
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'PROCESSING...';
+
+      const values = new FormData(form);
+      const name = String(values.get('name') || '');
+      const phone = String(values.get('phone') || '');
+      const email = String(values.get('email') || '');
+      const zip = String(values.get('zip') || '');
+      const vehicle = String(values.get('vehicle') || '');
+      const smsOptIn = values.get('sms_opt_in') === 'Yes';
+
+      await submitLeadToCRM({
+        name,
+        email,
+        phone,
+        zip,
+        vehicle,
+        interest: `Membership: ${selectedPlan} ($${selectedPrice}/${selectedInterval})`,
+        plan_name: selectedPlan,
+        plan_price: `$${selectedPrice}/${selectedInterval}`,
+        sms_opt_in: smsOptIn,
+        form_source: 'membership_enrollment',
+      });
+
+      if (checkoutUrl) {
+        window.location.href = buildCheckoutRedirectUrl(checkoutUrl, { email, name, phone });
+        return;
+      }
+
+      heading.textContent = 'Enrollment request received';
+      review.hidden = true;
+      done.hidden = false;
+      result.textContent = `Thanks, ${name.trim()}! Your ${selectedPlan} plan details ($${selectedPrice}/${selectedInterval}) for your ${vehicle.trim()} have been captured. Once Gabriel’s live Stripe/GHL checkout link is added in src/lib/crm.ts, this step automatically redirects straight to payment.`;
+      done.querySelector('button')?.focus();
+      submitting = false;
+    });
+  }
+</script>

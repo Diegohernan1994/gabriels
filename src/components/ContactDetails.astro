@@ -1,0 +1,8 @@
+---
+import { site } from '../lib/site';
+---
+<div class="contact-grid">
+  <section><h2>Visit the shop</h2><address>{site.address}</address><a class="text-link" href={site.directions}>Get directions <span aria-hidden="true">↗</span></a></section>
+  <section><h2>Get in touch</h2><p><a href={site.tel}>{site.phone}</a><br /><a href={`mailto:${site.email}`}>{site.email}</a></p><a class="text-link" href={site.tel}>Call for an estimate <span aria-hidden="true">↗</span></a></section>
+  <section><h2>Business hours</h2><p>Monday–Friday · 8:00 AM–5:00 PM<br />Saturday · 8:00 AM–1:00 PM<br />Sunday · Closed</p></section>
+</div>
