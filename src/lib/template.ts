@@ -88,9 +88,9 @@ function features($: CheerioAPI) {
     $(node).find('.ak-funfact-text p').text(item.label);
     if (index % 3 !== 0) $(node).find('.ak-funfact-number > div').eq(1).attr('hidden','');
   });
-  const reviewThumbs = [
+  const reviewPhotos = [
     '/media/hero-shop-front-2500.webp',
-    '/media/hero-shop-bays-2500.webp',
+    '/media/hero-bmw-lift-2500.webp',
   ];
   $('.testimonal-info').each((i, node) => {
     const review = reviews[i % reviews.length];
@@ -98,14 +98,11 @@ function features($: CheerioAPI) {
     $(node).find('.from').text('Yelp Review');
     $(node).find('.desp').text(review.quote);
     $(node).find('.testimaonial-slide-img').attr({
-      src: reviewThumbs[i % reviewThumbs.length],
+      src: reviewPhotos[i % reviewPhotos.length],
       alt: 'Gabriel’s Auto Service in Pasadena',
     });
   });
-  $('.testimonal-img img').attr({
-    src: '/media/hero-bmw-lift-2500.webp',
-    alt: 'BMW serviced at Gabriel’s Auto Service in Pasadena',
-  });
+  $('.testimonal-img').remove();
 }
 
 function serviceCards($: CheerioAPI) {

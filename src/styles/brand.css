@@ -59,8 +59,13 @@ html body .prices-table-wapper > * { position: relative; z-index: 1; }
 html body .ak-bg.common-page-title { position: relative; }
 html body .ak-bg.common-page-title::before { content: ''; position: absolute; inset: 0; background: rgba(16, 16, 16, 0.68); pointer-events: none; }
 html body .ak-bg.common-page-title > * { position: relative; z-index: 1; }
-html body .testimaonial-slide-img { width: 58px; height: 58px; border-radius: 50%; object-fit: cover; }
-html body .testimonal-img img,
+html body .ak-testimonal .testimonal-info.ak-style1 { align-items: stretch; gap: 40px; }
+html body .ak-testimonal .testimonal-info.ak-style1 .slider-info { flex: 1 1 52%; max-width: none; margin: 0; padding: 48px 0 48px 48px; display: flex; flex-direction: column; justify-content: center; }
+html body .ak-testimonal .testimonal-info.ak-style1 .testimaonial-slide-img { flex: 0 0 44%; width: 44%; max-width: 560px; height: 420px; max-height: none; object-fit: cover; border-radius: 0; }
+@media (max-width: 991px) {
+  html body .ak-testimonal .testimonal-info.ak-style1 .slider-info { padding: 24px 16px; }
+  html body .ak-testimonal .testimonal-info.ak-style1 .testimaonial-slide-img { width: 100%; max-width: 100%; height: 280px; }
+}
 html body .choose-us-img img,
 html body .service-card img { object-fit: cover; }
 html body .ak-site_branding img { width: 142px; height: 75px; object-fit: contain; }
