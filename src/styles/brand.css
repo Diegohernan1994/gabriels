@@ -52,6 +52,17 @@ html body :is(h1,h2,h3,h4,h5,h6) { font-family: 'Inter', sans-serif; }
 html body .ak-nav_list > li > a { font-family: 'Inter', sans-serif; font-weight: 600; }
 html body .ak-nav_list ul a { font-family: 'Montserrat', sans-serif; }
 html body .hero-title > h1 { font-weight: 900; font-style: oblique; }
+html body .ak-hero-bg { filter: brightness(0.45); }
+html body .prices-table-wapper { position: relative; }
+html body .prices-table-wapper::before { content: ''; position: absolute; inset: 0; background: rgba(16, 16, 16, 0.78); pointer-events: none; }
+html body .prices-table-wapper > * { position: relative; z-index: 1; }
+html body .ak-bg.common-page-title { position: relative; }
+html body .ak-bg.common-page-title::before { content: ''; position: absolute; inset: 0; background: rgba(16, 16, 16, 0.68); pointer-events: none; }
+html body .ak-bg.common-page-title > * { position: relative; z-index: 1; }
+html body .testimaonial-slide-img { width: 58px; height: 58px; border-radius: 50%; object-fit: cover; }
+html body .testimonal-img img,
+html body .choose-us-img img,
+html body .service-card img { object-fit: cover; }
 html body .ak-site_branding img { width: 142px; height: 75px; object-fit: contain; }
 html body .footer-logo img { width: 220px; height: 117px; object-fit: contain; }
 html body .footer.style-1 .footer-content .footer-info .phone { font-size: clamp(22px, 2.5vw, 32px); line-height: 1.2; white-space: nowrap; }

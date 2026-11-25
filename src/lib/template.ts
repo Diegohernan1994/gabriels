@@ -76,6 +76,11 @@ function features($: CheerioAPI) {
   const highlights = ['ASE Certified Technicians', 'Comprehensive Auto Repairs', 'AAA Approved Shop', 'Warranty Protected'];
   $('.stroke-heading-text h3').each((i, node) => $(node).text(highlights[i % highlights.length]));
   $('.choose-us-info .common-btn').attr('href','/about-us/');
+  $('.choose-us-img img').not('.circle-img').attr({
+    src: '/media/Gabriels-auto-service-26-scaled-33cf12afd24c.jpg',
+    alt: 'Technician inspecting a vehicle at Gabriel’s Auto Service in Pasadena',
+  });
+  $('.choose-us-img .circle-img').remove();
   const counters = [{number:'30',label:'YEARS OF EXPERIENCE'}, {number:'4',label:'CORE AUTO SERVICES'}, {number:'23',label:'COMMUNITIES SERVED'}];
   $('.ak-funfact').each((index, node) => {
     const item = counters[index % 3];
@@ -83,26 +88,36 @@ function features($: CheerioAPI) {
     $(node).find('.ak-funfact-text p').text(item.label);
     if (index % 3 !== 0) $(node).find('.ak-funfact-number > div').eq(1).attr('hidden','');
   });
+  const reviewThumbs = [
+    '/media/Gabriels-auto-service-34-3fa175576902.jpg',
+    '/media/Gabriels-auto-service-36-b77c7b8f5919.jpg',
+  ];
   $('.testimonal-info').each((i, node) => {
     const review = reviews[i % reviews.length];
     $(node).find('.name').text(review.name);
     $(node).find('.from').text('Yelp Review');
     $(node).find('.desp').text(review.quote);
-    $(node).find('.testimaonial-slide-img').attr('alt', '');
+    $(node).find('.testimaonial-slide-img').attr({
+      src: reviewThumbs[i % reviewThumbs.length],
+      alt: 'Gabriel’s Auto Service in Pasadena',
+    });
   });
-  $('.testimonal-img img').attr('alt', '');
+  $('.testimonal-img img').attr({
+    src: '/media/Gabriels-auto-service-38-1d271a9bdb5a.jpg',
+    alt: 'BMW serviced at Gabriel’s Auto Service in Pasadena',
+  });
 }
 
 function serviceCards($: CheerioAPI) {
   const container = $('.service').first();
   const card = container.find('.service-card').first().clone();
   container.empty();
-  services.forEach((item, index) => {
+  services.forEach((item) => {
     const node = card.clone();
     node.find('a').attr('href', item.path);
     node.find('.card-title').text(item.name);
     node.find('.card-desp').text(item.copy);
-    node.find('img').attr({src: `/cras/img/service_${index % 3 + 1}.jpg`,alt:''});
+    node.find('img').attr({src: item.image, alt: `${item.name} at Gabriel’s Auto Service`});
     container.append(node);
   });
   $('.services-content .ak-section-subtitle').text('Collision repair, mechanical maintenance, smog checks and tire services. Explore the care available at our Pasadena shop.');
@@ -129,6 +144,7 @@ function pricingCards($: CheerioAPI) {
     });
   });
   const area = $('.prices-table-wapper').length ? $('.prices-table-wapper') : $('.pricing').first().closest('.container');
+  $('.prices-table-wapper').attr('data-src', '/media/Gabriels-auto-service-46-4771f254fdcf.jpg');
   area.find('.background-text').text('Memberships');
   area.find('.ak-section-title').text('Memberships');
   area.find('.ak-section-subtitle').text('Choose a monthly auto care membership to keep your vehicle maintained year-round with predictable pricing and priority service.');
@@ -146,7 +162,7 @@ function blogCards($: CheerioAPI, items: Entry[]) {
     node.find('a').attr('href',post.path);
     node.find('.blog-title').text(post.title);
     node.find('.blog-text').text(dateLabel(post.date));
-    node.find('.blog-header-info img').attr({src:post.image?.src || '/cras/img/blog_1.jpg',alt:post.image?.alt || '',loading:'lazy'});
+    node.find('.blog-header-info img').attr({src:post.image?.src || '/media/Gabriels-auto-service-36-b77c7b8f5919.jpg',alt:post.image?.alt || '',loading:'lazy'});
     parent.append(node);
   }
   parent.closest('.container').find('.ak-section-subtitle').text('Auto maintenance tips and repair information for drivers in Pasadena and the surrounding communities.');
@@ -172,11 +188,41 @@ function serviceDetail($: CheerioAPI, entry: Entry) {
     const cities = pages.filter(page => page.path.startsWith('/auto-repair-shop-'));
     blocks.first().find('.single-blog-title').text('Auto Repair Service Areas');
     blocks.first().find('.single-blog-desp').text('Visit Gabriel’s Auto Service in Pasadena for professional auto repair, maintenance, smog checks and collision repair. We welcome drivers from across the San Gabriel Valley and greater Los Angeles area.');
-    blocks.first().find('img').attr('alt', 'Vehicle at Gabriel’s Auto Service');
+    blocks.first().find('img').attr({
+      src: '/media/Gabriels-auto-service-35-15a150657691.jpg',
+      alt: 'Gabriel’s Auto Service shop in Pasadena',
+    });
     blocks.slice(1).remove();
     $('.sticky-content > .content').append(`<div class="single-blog-list" data-aos="fade-up"><h4 class="single-blog-title">Cities We Serve</h4><p class="single-blog-desp">Select your city to learn more about the services available at our Pasadena shop.</p><div class="service-area-links">${cities.map(page => `<a class="more-btn" href="${page.path}">${escape(page.title.replace(/^Auto Repair Shop (?:in|for) /, ''))}</a>`).join('')}</div></div>`);
     $('.next-prev-btn').attr('hidden', '');
   } else {
+    const servicePhotos: Record<string, [string, string, string]> = {
+      '/collision-repair-services/': [
+        '/media/Gabriels-auto-service-37-b0ae75f2b841.jpg',
+        '/media/Gabriels-auto-service-34-3fa175576902.jpg',
+        '/media/Gabriels-auto-service-36-b77c7b8f5919.jpg',
+      ],
+      '/mechanical-repair-services/': [
+        '/media/Gabriels-auto-service-33-7d18eba784aa.jpg',
+        '/media/Gabriels-auto-service-46-4771f254fdcf.jpg',
+        '/media/Gabriels-auto-service-38-1d271a9bdb5a.jpg',
+      ],
+      '/smog-checks/': [
+        '/media/Gabriels-auto-service-35-15a150657691.jpg',
+        '/media/Gabriels-auto-service-40-0ad9808ef123.jpg',
+        '/media/Gabriels-auto-service-34-3fa175576902.jpg',
+      ],
+      '/tires-alignment/': [
+        '/media/Gabriels-auto-service-44-0679ba3dd1c8.jpg',
+        '/media/Gabriels-auto-service-45-f6d6776bdaa6.jpg',
+        '/media/Gabriels-auto-service-38-1d271a9bdb5a.jpg',
+      ],
+    };
+    const [heroPhoto, detailPhoto1, detailPhoto2] = servicePhotos[entry.path] || [
+      '/media/Gabriels-auto-service-34-3fa175576902.jpg',
+      '/media/Gabriels-auto-service-36-b77c7b8f5919.jpg',
+      '/media/Gabriels-auto-service-33-7d18eba784aa.jpg',
+    ];
     const cityParagraphs = paragraphs.filter(text => text.length > 115 && !text.startsWith('Gabriel’s Auto Service provides') && !text.startsWith('Our process is streamlined') && !text.startsWith('With my repairs') && !text.startsWith('They are honest') && !text.startsWith('Phone:') && !text.includes('Hours: Mon–Fri'));
     const copy = core ? paragraphs : cityParagraphs;
     const grouped: Record<string, { headings: string[]; indexes: number[][] }> = {
@@ -203,9 +249,9 @@ function serviceDetail($: CheerioAPI, entry: Entry) {
       block.find('.single-blog-title').first().text(headings[i] || 'Plan Your Visit');
       block.find('.single-blog-desp').first().text(text || (i === 0 ? entry.excerpt : `Call ${site.phone} or visit our shop at ${site.address} to discuss your vehicle.`));
     });
-    blocks.first().find('img').attr({ alt: `${entry.title} at Gabriel’s Auto Service`, loading: 'lazy' });
-    blocks.eq(3).find('img').eq(0).attr({ alt: 'Vehicle repair work at Gabriel’s Auto Service', loading: 'lazy' });
-    blocks.eq(3).find('img').eq(1).attr({ alt: 'Vehicle serviced at Gabriel’s Auto Service', loading: 'lazy' });
+    blocks.first().find('img').attr({ src: heroPhoto, alt: `${entry.title} at Gabriel’s Auto Service`, loading: 'lazy' });
+    blocks.eq(3).find('img').eq(0).attr({ src: detailPhoto1, alt: 'Vehicle repair work at Gabriel’s Auto Service', loading: 'lazy' });
+    blocks.eq(3).find('img').eq(1).attr({ src: detailPhoto2, alt: 'Vehicle serviced at Gabriel’s Auto Service', loading: 'lazy' });
 
     const sequence = core ? services : city ? pages.filter(page => page.path.startsWith('/auto-repair-shop-')) : [];
     const index = sequence.findIndex(item => item.path === entry.path);
@@ -238,6 +284,10 @@ function serviceDetail($: CheerioAPI, entry: Entry) {
       contactRows.eq(0).find('h3').text(site.phone);
       contactRows.eq(1).find('a').attr('href', `mailto:${site.email}`);
       contactRows.eq(1).find('h3').text(site.email);
+      section.find('.img-bg-faq').attr({
+        src: '/media/Gabriels-auto-service-41-d76dbee51ce1.jpg',
+        alt: 'Gabriel’s Auto Service bays in Pasadena',
+      });
       section.find('.ak-location a').attr('href', site.directions).find('span').last().text(site.address);
       section.find('.ak-date-time a').attr('href', '/contact-us/').find('span').last().html('Mon–Fri: 8 AM–5 PM<br>Sat: 8 AM–1 PM');
       accordion.empty();
@@ -264,13 +314,14 @@ function serviceDetail($: CheerioAPI, entry: Entry) {
 
 function homePage($: CheerioAPI) {
   const slides = [
-    ['Gabriel’s Auto','Service','Family owned. Fine tuned. We offer quality auto repairs backed by years of experience. Collision repair, mechanical services, smog checks, tires and alignment.'],
-    ['Mechanical','Repairs','From scheduled maintenance and computer diagnostics to brakes, air conditioning and electrical repairs. Visit our experienced technicians in Pasadena.'],
-    ['Collision','Repair','Quality collision repairs, bodywork and paint services from the specialists at Gabriel’s Auto Service.'],
-    ['Smog Checks','& Tire Service','Regular and STAR smog checks, tires and alignment. Call our Pasadena shop to arrange your next visit.'],
+    ['Gabriel’s Auto','Service','Family owned. Fine tuned. We offer quality auto repairs backed by years of experience. Collision repair, mechanical services, smog checks, tires and alignment.','/media/Gabriels-auto-service-34-3fa175576902.jpg'],
+    ['Mechanical','Repairs','From scheduled maintenance and computer diagnostics to brakes, air conditioning and electrical repairs. Visit our experienced technicians in Pasadena.','/media/Gabriels-auto-service-36-b77c7b8f5919.jpg'],
+    ['Collision','Repair','Quality collision repairs, bodywork and paint services from the specialists at Gabriel’s Auto Service.','/media/Gabriels-auto-service-35-15a150657691.jpg'],
+    ['Smog Checks','& Tire Service','Regular and STAR smog checks, tires and alignment. Call our Pasadena shop to arrange your next visit.','/media/Gabriels-auto-service-38-1d271a9bdb5a.jpg'],
   ];
   $('.ak-slider-hero-1 .swiper-slide').each((i,node) => {
-    const [title,second,description] = slides[i % slides.length];
+    const [title,second,description,photo] = slides[i % slides.length];
+    $(node).find('.ak-hero-bg').attr({ src: photo, alt: `${title} ${second} at Gabriel’s Auto Service` });
     $(node).find('.hero-main-title').text(title);
     $(node).find('.hero-main-title-1').text(second);
     $(node).find('.mini-title').text(description);
@@ -304,6 +355,7 @@ function innerPage($: CheerioAPI, options: Options) {
   }
   if (type === 'about' && entry) {
     features($);
+    $('[data-src*="about-page-title"]').attr('data-src', '/media/Gabriels-auto-service-35-15a150657691.jpg');
     $('.choose-us-info .common-btn').attr('href', '/contact-us/');
     $('.tabs li').each((i,node) => $(node).text(['About Us','Experience','Services'][i]));
     $('.tabs-content .background-text').text('Gabriel’s');
@@ -335,7 +387,7 @@ function innerPage($: CheerioAPI, options: Options) {
       $('.blog-feature .title').text(first.title);
       $('.blog-feature .desp').text(first.excerpt);
       $('.blog-feature a').attr('href',first.path);
-      $('.blog-feature img').attr({src:first.image?.src || '/cras/img/blog-show.jpg',alt:first.image?.alt || ''});
+      $('.blog-feature img').attr({src:first.image?.src || '/media/Gabriels-auto-service-36-b77c7b8f5919.jpg',alt:first.image?.alt || ''});
     }
     blogCards($, items);
     if (options.blogPage && (options.totalBlogPages || 0) > 1) {

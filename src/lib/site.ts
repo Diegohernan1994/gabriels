@@ -10,10 +10,10 @@ export const site = {
 };
 
 export const services = [
-  { name: 'Collision Repair', path: '/collision-repair-services/', image: '/theme/service_1.jpg', icon: '/theme/car-repair.svg', copy: 'Bodywork, paint and collision repairs for your vehicle.' },
-  { name: 'Mechanical Repair', path: '/mechanical-repair-services/', image: '/theme/service_2.jpg', icon: '/theme/car.svg', copy: 'Diagnostics, brakes and scheduled maintenance.' },
-  { name: 'Smog Checks', path: '/smog-checks/', image: '/theme/service_3.jpg', icon: '/theme/speedome.svg', copy: 'Regular and STAR smog checks in Pasadena.' },
-  { name: 'Tires & Alignment', path: '/tires-alignment/', image: '/theme/hero_slider_bg_2.png', icon: '/theme/car.svg', copy: 'Tire service and wheel alignment to keep you on the road.' },
+  { name: 'Collision Repair', path: '/collision-repair-services/', image: '/media/Gabriels-auto-service-37-b0ae75f2b841.jpg', icon: '/cras/img/car-repair.svg', copy: 'Bodywork, paint and collision repairs for your vehicle.' },
+  { name: 'Mechanical Repair', path: '/mechanical-repair-services/', image: '/media/Gabriels-auto-service-46-4771f254fdcf.jpg', icon: '/cras/img/car.svg', copy: 'Diagnostics, brakes and scheduled maintenance.' },
+  { name: 'Smog Checks', path: '/smog-checks/', image: '/media/Gabriels-auto-service-35-15a150657691.jpg', icon: '/cras/img/speedome.svg', copy: 'Regular and STAR smog checks in Pasadena.' },
+  { name: 'Tires & Alignment', path: '/tires-alignment/', image: '/media/Gabriels-auto-service-44-0679ba3dd1c8.jpg', icon: '/cras/img/car.svg', copy: 'Tire service and wheel alignment to keep you on the road.' },
 ];
 
 export const links = [
